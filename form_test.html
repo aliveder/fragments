@@ -1,0 +1,45 @@
+
+<html>
+<head>
+	<title>Form Test</title>
+<body>
+	<!-- DEMONSTRATION of form action/method etc -->
+	<form> 
+	    <div>
+		<span>URL:</span> <input type="text" name="url" />
+		<input type="submit" value="Submit" />
+	    </div>
+	</form>
+	
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+	<script>
+		(function( $ ) {
+			$('form').submit(function() {
+				var url = getInputName( 'url' );
+				
+				$.ajax(
+					{
+						type: "GET",
+						url: 'index.php',
+						data: {
+							url: url.val(),
+						},
+						dataType: 'jsonp',
+						success: function( data ) {
+							console.log( data )
+						},
+						error: function( textStatus ) {
+							console.log( textStatus.responseText );
+						}
+					}
+				);	
+				return false;
+			});
+
+			function getInputName( name ) {
+				return $('input[name='+name+']');
+			}
+		})( jQuery );
+	</script>
+</body>
+</html>
